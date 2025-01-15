@@ -37,7 +37,7 @@ class FlickrImageScreenKtTest{
     }
 
     @Test
-    fun searchBarIsDisplayed() {
+    fun testOnInputSuccessBehavior() {
         with(composeTestRule) {
             onNodeWithTag("search_bar_test_tag").assertIsDisplayed()
             onNodeWithTag("search_bar_test_tag").onChild().performTextInput("Apple")

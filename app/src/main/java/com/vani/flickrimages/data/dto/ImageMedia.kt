@@ -1,5 +1,5 @@
 package com.vani.flickrimages.data.dto
 
-data class Media(
+data class ImageMedia(
     val m: String?=null
 )

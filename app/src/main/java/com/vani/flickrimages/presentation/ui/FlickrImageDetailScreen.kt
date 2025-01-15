@@ -2,36 +2,25 @@ package com.vani.flickrimages.presentation.ui
 
 import android.content.res.Configuration
 import android.text.Html
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import coil.compose.rememberAsyncImagePainter
-import com.vani.flickrimages.R
 import com.vani.flickrimages.domain.models.FlickrImageItem
 import com.vani.flickrimages.presentation.ui.theme.LocalSpacing
 import com.vani.flickrimages.presentation.ui.theme.Typography
@@ -43,7 +32,7 @@ fun FlickImageDetailScreen(viewModel: FlickrImageViewModel){
 
     viewModel.selectedFlickrImage?.let { flickrImage ->
         ImageDetails { modifier ->
-            ImageDetailsCard(modifier, flickrImage)
+            FlickrImageCard(modifier, flickrImage)
             Spacer(modifier = Modifier.padding(top = spacing.medium))
             ImageDetailsContent(flickrImage)
         }
@@ -76,32 +65,13 @@ fun ImageDetails(content: @Composable (modifier: Modifier) -> Unit){
     }
 }
 
-@Composable
-fun ImageDetailsCard(modifier: Modifier, flickrImage: FlickrImageItem) {
-    val spacing = LocalSpacing.current
-    val context = LocalContext.current
-
-    Card(
-        modifier = modifier
-            .testTag(context.getString(R.string.details_card_test_tag)),
-        elevation = CardDefaults.elevatedCardElevation(defaultElevation = spacing.medium),
-        shape = RoundedCornerShape(spacing.medium)
-    ) {
-        Image(
-            painter = rememberAsyncImagePainter(flickrImage.mediaLink),
-            contentDescription = null,
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(spacing.xSmall)
-                .clip(RoundedCornerShape(spacing.medium)),
-            contentScale = ContentScale.FillBounds
-        )
-    }
-}
 
 @Composable
 fun ImageDetailsContent(flickrImage: FlickrImageItem) {
     val spacing = LocalSpacing.current
+
+    // Parse Html to text
+    val description = Html.fromHtml(flickrImage.description, 0).trim()
     Column {
         Text(
             text = "Title : ${flickrImage.title}",
@@ -113,7 +83,7 @@ fun ImageDetailsContent(flickrImage: FlickrImageItem) {
         )
 
         Text(
-            text = "Description : ${Html.fromHtml(flickrImage.description).trim()}",
+            text = "Description : $description",
             color = Color.Black,
             fontSize = Typography.bodyLarge.fontSize,
             fontStyle = FontStyle.Normal,

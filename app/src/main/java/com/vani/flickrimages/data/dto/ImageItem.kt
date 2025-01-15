@@ -2,7 +2,7 @@ package com.vani.flickrimages.data.dto
 
 import com.google.gson.annotations.SerializedName
 
-data class Item(
+data class ImageItem(
     val author: String? = null,
     @SerializedName("author_id")
     val authorId: String? = null,
@@ -10,7 +10,7 @@ data class Item(
     val dateTaken: String? = null,
     val description: String? = null,
     val link: String? = null,
-    val media: Media? = null,
+    val media: ImageMedia? = null,
     val published: String? = null,
     val tags: String? = null,
     val title: String? = null

@@ -1,16 +1,14 @@
 package com.vani.flickrimages.domain.usecases
 
 import com.vani.flickrimages.data.dto.FlickrImageResponseDto
-import com.vani.flickrimages.data.dto.Item
+import com.vani.flickrimages.data.dto.ImageItem
 import com.vani.flickrimages.domain.AsyncOperations
 import com.vani.flickrimages.domain.FlickrImageIRepo
 import com.vani.flickrimages.domain.mappers.FlickrImageMapper
 import com.vani.flickrimages.domain.models.FlickrImage
 import io.mockk.coEvery
 import io.mockk.coVerify
-import io.mockk.every
 import io.mockk.mockk
-import io.mockk.verify
 import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.take
@@ -26,7 +24,7 @@ class FlickrImageUseCaseImplTest{
 
     private val target = FlickrImageUseCaseImpl(mockRepo, FlickrImageMapper())
     private val flickrImageResponseDto = FlickrImageResponseDto(
-        items = listOf(Item(
+        items = listOf(ImageItem(
             author = "nobody@flickr.com (\"Gary K. Mann\")",
             title = "ZACK THE DOBERMANN",
             published = "2025-01-13T21:54:53Z",

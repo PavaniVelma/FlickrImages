@@ -33,6 +33,11 @@ class FlickrImageMapper @Inject constructor():
         TODO("Not yet implemented")
     }
 
+    /**
+     * Formats DTO published date to UI readable date format
+     * @param date Input date in String
+     * @return Formatted date in UI friendly format
+     */
     private fun formatDate(date: String?): String? {
         return date?.let { input ->
             val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault())
