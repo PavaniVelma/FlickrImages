@@ -25,19 +25,16 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class FlickrImageScreenKtTest{
 
-    @get:Rule(order = 0)
+    @get:Rule
     val hiltRule = HiltAndroidRule(this)
 
-    @get:Rule(order = 1)
+    @get:Rule
     val composeTestRule = createAndroidComposeRule<MainActivity>()
-
-    @Before
-    fun setup() {
-        hiltRule.inject()
-    }
 
     @Test
     fun testOnInputSuccessBehavior() {
+        hiltRule.inject()
+
         with(composeTestRule) {
             onNodeWithTag("search_bar_test_tag").assertIsDisplayed()
             onNodeWithTag("search_bar_test_tag").onChild().performTextInput("Apple")

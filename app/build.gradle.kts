@@ -76,6 +76,11 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
     androidTestImplementation("io.mockk:mockk:1.13.13")
 
+    androidTestImplementation("com.google.dagger:hilt-android-testing:2.49")
+    testImplementation("com.google.dagger:hilt-android-testing:2.49")
+    kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.49")
+    kaptTest("com.google.dagger:hilt-android-compiler:2.49")
+
     //Dagger-hilt
     implementation("com.google.dagger:hilt-android:2.48")
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
@@ -94,10 +99,5 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.0.0-rc01")
     testImplementation("io.mockk:mockk:1.13.13")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.9.0")
-
-    androidTestImplementation("com.google.dagger:hilt-android-testing:2.49")
-    testImplementation("com.google.dagger:hilt-android-testing:2.49")
-    kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.49")
-    kaptTest("com.google.dagger:hilt-android-compiler:2.49")
 
 }
