@@ -1,5 +1,6 @@
 package com.vani.flickrimages.presentation.ui
 
+import android.content.res.Configuration.ORIENTATION_LANDSCAPE
 import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -38,9 +39,11 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -60,10 +63,10 @@ fun FlickrImageScreen(navController: NavController,viewModel: FlickrImageViewMod
 }
 
 @Composable
-fun FlickrImages(flickrImage: FlickrImageItem, onClick:(FlickrImageItem) ->Unit){
+fun FlickrImages(modifier: Modifier, flickrImage: FlickrImageItem, onClick:(FlickrImageItem) ->Unit){
     val spacing = LocalSpacing.current
 
-    Card(modifier = Modifier
+    Card(modifier = modifier
         .fillMaxWidth()
         .aspectRatio(1f)
         .clickable {
@@ -116,7 +119,8 @@ fun FlickerImagesSearch(viewModel: FlickrImageViewModel, navController: NavContr
     SearchBar(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(spacing.medium),
+            .padding(spacing.medium)
+            .testTag(context.getString(R.string.search_bar_test_tag)),
         query = query.value,
         onQueryChange = { viewModel.updateQuery(it) },
         onSearch ={ viewModel.updateQuery(it) },
@@ -137,7 +141,9 @@ fun FlickerImagesSearch(viewModel: FlickrImageViewModel, navController: NavContr
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     CircularProgressIndicator(
-                        modifier = Modifier.padding(spacing.large)
+                        modifier = Modifier
+                            .padding(spacing.large)
+                            .testTag(context.getString(R.string.progress_bar_test_tag)),
                     )
                 }
             }
@@ -147,15 +153,19 @@ fun FlickerImagesSearch(viewModel: FlickrImageViewModel, navController: NavContr
 
                 Spacer(modifier = Modifier.padding(top = spacing.xLarge))
                 val items = (result.value as? FlickrImageViewState.OnSuccess)?.data?.items
+                val configuration = LocalConfiguration.current
+
                 LazyVerticalStaggeredGrid(
-                    columns = StaggeredGridCells.Fixed(2),
+                    modifier = Modifier.testTag(context.getString(R.string.grid_test_tag)),
+                    columns = StaggeredGridCells.Fixed(if(configuration.orientation == ORIENTATION_LANDSCAPE) 3 else 2),
                     contentPadding = PaddingValues(spacing.medium),
                     verticalItemSpacing = spacing.medium,
                     horizontalArrangement = Arrangement.spacedBy(spacing.medium)
                 ) {
                     items?.let { item ->
                         items(item){
-                            FlickrImages(it){ selectedItem ->
+                            val testTag = String.format(context.getString(R.string.image_item_test_tag), items.indexOf(it).toString())
+                            FlickrImages(Modifier.testTag(testTag), it){ selectedItem ->
                                 viewModel.selectedFlickrImage = selectedItem
                                 navController.navigate(FlickrImageRoutes.FlickrImageDetails.route)
                             }

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="search_bar_test_tag">search_bar_test_tag</string>
+    <string name="progress_bar_test_tag">progress_bar_test_tag</string>
+    <string name="grid_test_tag">grid_test_tag</string>
+    <string name="image_item_test_tag">image_item_test_tag_%s</string>
+    <string name="details_card_test_tag">details_card_test_tag%s</string>
+</resources>

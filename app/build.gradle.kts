@@ -16,7 +16,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.vani.flickrimages.HiltJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -47,6 +47,11 @@ android {
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes += "META-INF/LICENSE.md"
+            excludes += "META-INF/LICENSE.txt"
+            excludes += "META-INF/NOTICE.md"
+            excludes += "META-INF/NOTICE.txt"
+            excludes += "META-INF/LICENSE-notice.md"
         }
     }
 }
@@ -89,5 +94,10 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.0.0-rc01")
     testImplementation("io.mockk:mockk:1.13.13")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.9.0")
+
+    androidTestImplementation("com.google.dagger:hilt-android-testing:2.49")
+    testImplementation("com.google.dagger:hilt-android-testing:2.49")
+    kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.49")
+    kaptTest("com.google.dagger:hilt-android-compiler:2.49")
 
 }
